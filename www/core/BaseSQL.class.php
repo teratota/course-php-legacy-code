@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Core;
 class BaseSQL
 {
@@ -28,9 +29,9 @@ class BaseSQL
     /**
      * @param array $where the where clause
      * @param bool $object if it will return an array of results ou an object
-     * @return mixed
+     * @return array
      */
-    public function getOneBy(array $where, $object = false)
+    public function getOneBy(array $where,bool $object = false): array
     {
         $sqlWhere = [];
         foreach ($where as $key => $value) {

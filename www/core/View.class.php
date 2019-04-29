@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Core;
 class View
 {
@@ -6,13 +7,13 @@ class View
     private $t;
     private $data = [];
 
-    public function __construct($v, $t="back")
+    public function __construct(string $v, string $t="back")
     {
         $this->setView($v);
         $this->setTemplate($t);
     }
 
-    public function setView($v)
+    public function setView(string $v)
     {
         $viewPath = "views/".$v.".view.php";
         if (file_exists($viewPath)) {
@@ -22,7 +23,7 @@ class View
         }
     }
 
-    public function setTemplate($t)
+    public function setTemplate(string $t)
     {
         $templatePath = "views/templates/".$t.".tpl.php";
         if (file_exists($templatePath)) {
@@ -32,7 +33,7 @@ class View
         }
     }
 
-    public function addModal($modal, $config)
+    public function addModal(string $modal, string $config)
     {
         $modalPath = "views/modals/".$modal.".mod.php";
         if (file_exists($modalPath)) {
@@ -42,7 +43,7 @@ class View
         }
     }
 
-    public function assign($key, $value)
+    public function assign(string $key, string $value)
     {
         $this->data[$key]=$value;
     }
