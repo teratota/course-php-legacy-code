@@ -1,11 +1,13 @@
 <?php
 
 require "conf.inc.php";
+use Core\Routing;
 
 function myAutoloader($class)
 {
-    $classPath = "core/".$class.".class.php";
-    $classModel = "models/".$class.".class.php";
+    $classname = substr($class, strpos($class, '\\')+1);
+    $classPath = "Core/".$classname.".class.php";
+    $classModel = "Models/".$classname.".class.php";
     if (file_exists($classPath)) {
         include $classPath;
     } elseif (file_exists($classModel)) {
