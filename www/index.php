@@ -6,8 +6,8 @@ use Core\Routing;
 function myAutoloader($class)
 {
     $classname = substr($class, strpos($class, '\\')+1);
-    $classPath = "Core/".$classname.".class.php";
-    $classModel = "Models/".$classname.".class.php";
+    $classPath = "Core/".$classname.".php";
+    $classModel = "Models/".$classname.".php";
     if (file_exists($classPath)) {
         include $classPath;
     } elseif (file_exists($classModel)) {
@@ -22,11 +22,13 @@ spl_autoload_register("myAutoloader");
 $slug = explode("?", $_SERVER["REQUEST_URI"])[0];
 $routes = Routing::getRoute($slug);
 extract($routes);
-
+$container =[];
+$container['config'] = require 'config/global.php';
+$container += require 'config/di.global.php';
 // Vérifie l'existence du fichier et de la classe pour charger le controlleur
 if (file_exists($cPath)) {
     include $cPath;
-    if (class_exists($c)) {
+    if (class_exists('\\Controllers\\'.$c)) {
         //instancier dynamiquement le controller
         $cObject = new $c();
         //vérifier que la méthode (l'action) existe
