@@ -42,6 +42,9 @@ class Users extends BaseSQL
         $this->status = $status;
     }
 
+}
+class connectUsers
+{
     public function getRegisterForm(): array
     {
         return [
