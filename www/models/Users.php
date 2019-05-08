@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace Models;
-class Users extends BaseSQL
+class Users
 {
     public $id = null;
     public $firstname;
@@ -29,9 +29,9 @@ class Users extends BaseSQL
     {
         $this->email = strtolower(trim($email));
     }
-    public function setPwd($pwd)
+    public function setPwd(String $pwd)
     {
-        $this->pwd = password_hash(String $pwd, PASSWORD_DEFAULT);
+        $this->pwd = password_hash( $pwd, PASSWORD_DEFAULT);
     }
     public function setRole(String $role)
     {

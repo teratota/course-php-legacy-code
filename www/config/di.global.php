@@ -1,6 +1,6 @@
 <?php
-use Controller\PagesController;
-use Controller\UsersController;
+use Controllers\PagesController;
+use Controllers\UsersController;
 use Model\Users;
 
 return [
@@ -13,11 +13,11 @@ return [
 
         return new Users($driver, $host, $name, $user, $password);
     },
-    UserController::class => function($container){
+    UsersController::class => function($container){
         $userModel = $container[Users::class]($container);
         return new UsersController($userModel);
     },
     PagesController::class => function($container){
         return new PagesController();
     }
-]
+];

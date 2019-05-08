@@ -30,17 +30,18 @@ if (file_exists($cPath)) {
     include $cPath;
     if (class_exists('\\Controllers\\'.$c)) {
         //instancier dynamiquement le controller
-        $cObject = new $c();
+        // $cObject = new $c();
+        $cObject = $container['Controllers\\'.$c]($container);
         //vérifier que la méthode (l'action) existe
         if (method_exists($cObject, $a)) {
             //appel dynamique de la méthode
             $cObject->$a();
         } else {
-            die("La methode ".$a." n'existe pas");
+            die("La methode " . $a . " n'existe pas");
         }
     } else {
-        die("La class controller ".$c." n'existe pas");
+        die("La class controller " . $c . " n'existe pas");
     }
 } else {
-    die("Le fichier controller ".$c." n'existe pas");
+    die("Le fichier controller " . $c . " n'existe pas");
 }
