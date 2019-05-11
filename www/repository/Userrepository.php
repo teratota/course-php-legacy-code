@@ -23,41 +23,24 @@ class Userrepository
             $sqlWhere[] = $key . "=:" . $key;
         }
         $sql = " SELECT * FROM Users WHERE  " . implode(" AND ", $sqlWhere) . ";";
-        $query = $this->dbConnect->prepare($sql);
+        $sqlquery = $this->dbConnect->prepare($sql);
         if ($object) {
-            $this->getOneObject($query, $where);
+            $this->getOneObject($sqlquery, $where);
         } else {
-            $this->getOneArray($query, $where);
+            $this->getOneArray($sqlquery, $where);
         }
     }
-    public function getOneArray(\PDOStatement $query, array $where): array
+    public function getOneArray(\PDOStatement $sqlquery, array $where): array
     {
-        $query->setFetchMode(PDO::FETCH_ASSOC);
-        $query->execute($where);
-        return $query->fetch();
+        $sqlquery->setFetchMode(PDO::FETCH_ASSOC);
+        $sqlquery->execute($where);
+        return $sqlquery->fetch();
     }
-    public function getOneObject(\PDOStatement $query, array $where): object
+    public function getOneObject(\PDOStatement $sqlquery, array $where): object
     {
-        $query->setFetchMode(PDO::FETCH_INTO, $this);
-        $query->execute($where);
-        return $query->fetch();
-    }
-    public function save(Users $users): void
-    {
-        $identity = $users->identity();
-        $email = $users->email();
-        $password = $users->password();
-        $role = $users->role();
-        $status = $users->status();
-        $sql = "INSERT INTO Users (firstname, lastname, email, pwd, status, role) VALUES (:firstname, :lastname, :email, :pwd, :status, :role)";
-        $query = $this->dbConnect->prepare($sql);
-        $query->bindParam(':firstname', $identity->FirstName());
-        $query->bindParam(':lastname', $identity->LastName());
-        $query->bindParam(':email', $email->Email());
-        $query->bindParam(':pwd', $password->toString());
-        $query->bindParam(':role', $role);
-        $query->bindParam(':status', $status);
-        $query->execute();
+        $sqlquery->setFetchMode(PDO::FETCH_INTO, $this);
+        $sqlquery->execute($where);
+        return $sqlquery->fetch();
     }
     public function update(Users $users): void
     {
@@ -68,14 +51,31 @@ class Userrepository
         $status = $users->status();
         $uid = $users->uid();
         $sql = "UPDATE `Users` SET `firstname`=:firstname,`lastname`= :lastname,`email`= :email,`pwd`= :pwd,`status`=:status,`role`=:role WHERE id = :id ";
-        $query = $this->dbConnect->prepare($sql);
-        $query->bindParam(':firstname', $identity->FirstName());
-        $query->bindParam(':lastname', $identity->LastName());
-        $query->bindParam(':email', $email->Email());
-        $query->bindParam(':pwd', $password->toString());
-        $query->bindParam(':role', $role);
-        $query->bindParam(':status', $status);
-        $query->bindParam(':id', $uid->toInt());
-        $query->execute();
+        $sqlquery = $this->dbConnect->prepare($sql);
+        $sqlquery->bindParam(':firstname', $identity->FirstName());
+        $sqlquery->bindParam(':lastname', $identity->LastName());
+        $sqlquery->bindParam(':email', $email->Email());
+        $sqlquery->bindParam(':pwd', $password->toString());
+        $sqlquery->bindParam(':role', $role);
+        $sqlquery->bindParam(':status', $status);
+        $sqlquery->bindParam(':id', $uid->toInt());
+        $sqlquery->execute();
+    }
+    public function save(Users $users): void
+    {
+        $identity = $users->identity();
+        $email = $users->email();
+        $password = $users->password();
+        $role = $users->role();
+        $status = $users->status();
+        $sql = "INSERT INTO Users (firstname, lastname, email, pwd, status, role) VALUES (:firstname, :lastname, :email, :pwd, :status, :role)";
+        $sqlquery = $this->dbConnect->prepare($sql);
+        $sqlquery->bindParam(':firstname', $identity->FirstName());
+        $sqlquery->bindParam(':lastname', $identity->LastName());
+        $sqlquery->bindParam(':email', $email->Email());
+        $sqlquery->bindParam(':pwd', $password->toString());
+        $sqlquery->bindParam(':role', $role);
+        $sqlquery->bindParam(':status', $status);
+        $sqlquery->execute();
     }
 }
