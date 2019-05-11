@@ -3,7 +3,7 @@ namespace ValueObject;
 
 class Useridentity
 {
-    private $Useremail;
+    private $Useridentity;
     public function __construct(string $Useridentity)
     {
         $this->Useridentity = $Useridentity;
