@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 namespace ValueObject;
+
 class Dbdriver
 {
-    private $databaseName;
+    private $Dbdriver;
     public function __construct(string $Dbdriver)
     {
         $this->Dbdriver = $Dbdriver;

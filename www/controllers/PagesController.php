@@ -1,7 +1,8 @@
-<?php 
-declare(strict_types=1);
+<?php declare(strict_types=1);
 namespace Controllers;
+
 use Core\View;
+
 class PagesController
 {
     public function defaultAction(): void
